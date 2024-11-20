@@ -26,13 +26,13 @@
             <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
                   <li>
-                    <RouterLink to="/cards" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Carte à l'unité</RouterLink>
+                    <RouterLink to="/pokemon" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Carte Pokémon</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/decks" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Deck</RouterLink>
+                    <RouterLink to="/mtg" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Carte Magic The Gathering</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/display" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Display</RouterLink>
+                    <RouterLink to="/ygo" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Carte Yu Gi Oh</RouterLink>
                   </li>
                 </ul>
             </div>

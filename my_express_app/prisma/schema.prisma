@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Carte {
+  id       String @id @unique @default(cuid())
+  name     String
+  imageURL String
+  price    Float
+  typeId   String
+  types   Type   @relation(fields: [typeId], references: [id])
+}
+
+model Type {
+  id        String  @id @unique @default(cuid())
+  typeCarte String?
+  Carte     Carte[]
+}
+
+model User {
+  id       String @id @unique @default(cuid())
+  email    String @unique
+  password String
+  pseudo   String @unique
+}

@@ -15,20 +15,22 @@ const routes = [
         component: HomeView,
       },
       {
-        path: 'cards',
-        name: 'Cards',
+        path: 'pokemon',
+        name: 'Pokemon',
         component: PurchaseView,
-        props : {_title:"test"}
+        props: { category: 'pokemon' },
       },
       {
-        path: 'decks',
-        name: 'Decks',
-        component: AboutView,
+        path: 'mtg',
+        name: 'MTG',
+        component: PurchaseView,
+        props: { category: 'mtg' },
       },
       {
-        path: 'display',
-        name: 'Display',
-        component: AboutView,
+        path: 'ygo',
+        name: 'YGO',
+        component: PurchaseView,
+        props: { category: 'ygo' },
       },
       {
         path: '3d',
