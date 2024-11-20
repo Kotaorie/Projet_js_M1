@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
 import AppLayout from '@/components/AppLayout.vue';
 import PurchaseView from '@/views/PurchaseView.vue';
+import LoginView from '@/views/LoginView.vue';
 
 const routes = [
   {
@@ -45,7 +46,7 @@ const routes = [
       {
         path: 'login',
         name: 'Login',
-        component: AboutView,
+        component: LoginView,
       }
     ]
   }

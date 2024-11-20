@@ -6,8 +6,13 @@ const cors = require('cors');
 const prisma = new PrismaClient();
 
 app.use(cors({
-  origin: 'http://localhost:8080'
-  }));
+  origin: 'http://localhost:8080',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
+app.use(express.json()); // Middleware pour parser les requêtes JSON
+app.use(express.urlencoded({ extended: true })); 
   
 let db = new sqlite3.Database('./mydb.sqlite3', (err) => {
   if (err) {
@@ -23,7 +28,7 @@ app.listen(PORT, () => {
 
 // Login route
 app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body.data;
   try {
     const user = await prisma.user.findUnique({
       where: { email }
