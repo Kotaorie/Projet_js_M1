@@ -65,14 +65,26 @@ app.post('/register', async (req, res) => {
 });
 //get card
 app.get('/cards', async (req, res) => {
-  const { type } = req.query;
+  const { type, price, name } = req.query;
   try {
     const types = await prisma.type.findFirst({
-      where: { typeCarte: type }
+      where: { typeCarte: type,}
     });
+    let filters = { typeId: types.id };
+    if (price) {
+      const parsedPrice = parseFloat(price);
+      if (!isNaN(parsedPrice)) {
+        filters.price = { lte: parsedPrice };
+      }
+    }
+    if (name) {
+      filters.name = { contains: name };
+    }
+    console.log(filters);
     const cards = await prisma.carte.findMany({
-      where: { typeId: types.id }
+      where: filters,
     });
+    
     res.json(cards);
   } catch (error) {
     res.status(500).send(error.message);

@@ -19,10 +19,9 @@
         </div>
         <div class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
           <div class="flex items-center w-full space-x-3 md:w-auto">
-            <span class="text-sm font-medium text-gray-900 dark:text-gray-200">{{ minPrice }} €</span>
-            <span class="text-sm font-medium text-gray-900 dark:text-gray-200">{{ price }} €</span>
+            <span class="text-sm font-medium text-gray-900 dark:text-gray-200">{{ minPrice }}€</span>
             <input id="minmax-range" type="range" :min="minPrice" max="maxPrice" step="5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" v-model="price">
-            <span class="text-sm font-medium text-gray-900 dark:text-gray-200">{{ maxPrice }} €</span>
+            <span class="text-sm font-medium text-gray-900 dark:text-gray-200">{{ maxPrice }}€</span>
             <div id="actionsDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
               <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
                 <li>
@@ -93,12 +92,10 @@ export default {
     },
     watch: {
         price() {
-            console.log(this.price);
-            this.$emit('filter', this.price);
+            this.$emit('filter', this.price, this.name);
         },
         name() {
-            console.log(this.name);
-            this.$emit('filter', this.name);
+            this.$emit('filter', this.price, this.name);
         }
     }
 }

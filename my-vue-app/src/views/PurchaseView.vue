@@ -34,24 +34,20 @@
     methods: {
       async addCard(price, name) {
         var response = '';
-        console.log('Filtering by:', price, name);
-        if(price || name){
-          response = await axios.get('http://localhost:3000/cards?type='+this.category+'&price='+price+'&name='+name);
-        }else{
-          response = await axios.get('http://localhost:3000/cards?type='+this.category);
+        var filter = '';
+        if(price){
+          filter = '&price='+price;
         }
+        if(name){
+          filter = '&name='+name;
+        }
+        response = await axios.get('http://localhost:3000/cards?type='+this.category+filter);
+        console.log(filter);
         this.cards = response.data;
         for (let i = 0; i < this.cards.length; i++) {
-          console.log('Card:', this.cards[i].price);
           this.minPrice = Math.min(this.minPrice, this.cards[i].price);
           this.maxPrice = Math.max(this.maxPrice, this.cards[i].price);
         }
-        console.log('Min price:', this.minPrice);
-        console.log('Max price:', this.maxPrice);
-      },
-      async filterResults(price, name) {
-        const response = await axios.get('http://localhost:3000/cards?price='+price+'&name='+name);
-        this.cards = response.data;
       }
     }
   }
