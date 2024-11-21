@@ -18,3 +18,20 @@ export const useLoginStore = defineStore('login', {
     }
   }
 });
+
+export const usePanierStore = defineStore('panier', {
+    state: () => ({
+        panier: []
+    }),
+    getters: {
+        getPanier: (state) => state.panier
+    },
+    actions: {
+        addToPanier(item) {
+        this.panier.push(item);
+        },
+        removeFromPanier(index) {
+        this.panier.splice(index, 1);
+        }
+    }
+});

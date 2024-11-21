@@ -6,13 +6,11 @@
     <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
       <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
         <div class="space-y-6">
-          <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+          <div v-for="(e, index) of articles" :key="index" class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-              <a href="#" class="shrink-0 md:order-1">
                 <img class="h-20 w-20 dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="imac image" />
+                <h2>{{ e.name }}</h2>
                 <img class="hidden h-20 w-20 dark:block" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="imac image" />
-              </a>
-
               <label for="counter-input" class="sr-only">Choose quantity:</label>
               <div class="flex items-center justify-between md:order-3 md:justify-end">
                 <div class="flex items-center">
@@ -112,9 +110,7 @@
 export default{
   name: 'AppPanier',
   props: {
-    title: String,
-    image: String,
-    price: Number,
+   articles: Array,
   }
 }
 </script>

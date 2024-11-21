@@ -7,7 +7,7 @@
             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ title }}</h5>
             <div class="flex items-center justify-between">
                 <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ price }}</span>
-                <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
+                <button class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" :onclick="addArticle">Ajouter au panier</button>
             </div>
         </div>
     </div>
@@ -20,6 +20,11 @@ export default {
         title: String,
         image: String,
         price: Number,
+    },
+    methods: {
+        addArticle() {
+            this.$emit('add-article', { title: this.title, price: this.price });
+        }
     }
 }
 

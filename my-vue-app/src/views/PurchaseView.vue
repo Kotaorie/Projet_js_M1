@@ -4,7 +4,7 @@
         <AppCardFilter @filter="addCard" :minPrice="minPrice" :maxPrice="maxPrice"/>
       </div>
         <div class="grid grid-cols-5 gap-4 w-[80%] mx-auto">
-          <AppCard v-for="item in cards" :key="item" :image="item.imageURL" :title="item.name" :price="item.price"/>
+          <AppCard v-for="item in cards" :key="item" :image="item.imageURL" :title="item.name" :price="item.price" @add-article="addArticle"/>
         </div>
     </div>
   </template>
@@ -13,6 +13,7 @@
   import AppCard from '@/components/AppCard.vue';
   import AppCardFilter from '@/components/AppCardFilter.vue';
   import axios from 'axios';
+  import {usePanierStore} from '@/store/store.js';
   export default {
     name: 'PurchaseView',
     components: {AppCard, AppCardFilter},
@@ -22,6 +23,10 @@
         minPrice: 0,
         maxPrice: 0,
       }
+    },
+    setup() {
+      const panier = usePanierStore();
+      return { panier };
     },
     props: {
       category: String,
@@ -56,6 +61,10 @@
           this.minPrice = Math.min(this.minPrice, this.cards[i].price);
           this.maxPrice = Math.max(this.maxPrice, this.cards[i].price);
         }
+      },
+      addArticle(name, price) {
+        this.panier.addToPanier(name, price);
+        console.log(this.panier.getPanier);
       }
     }
   }
