@@ -29,4 +29,8 @@ body {
     height: 80vh;
     background-color: #EFF1ED
 }
+.main {
+    background-color: #f9fafb;
+    min-height: 70vh;
+}
 </style>

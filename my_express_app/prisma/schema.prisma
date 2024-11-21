@@ -10,19 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Carte {
-  id       String @id @unique @default(cuid())
-  name     String
-  imageURL String
-  price    Float
-  typeId   String
-  types   Type   @relation(fields: [typeId], references: [id])
+model Produit {
+  id          String    @id @unique @default(cuid())
+  name        String
+  imageURL    String
+  price       Float
+  typeId      String
+  types      Type      @relation(fields: [typeId], references: [id])
+  categorieId String
+  categories Categorie @relation(fields: [categorieId], references: [id])
+  Commande    Commande? @relation(fields: [commandeId], references: [id])
+  commandeId  String?
 }
 
 model Type {
-  id        String  @id @unique @default(cuid())
+  id        String    @id @unique @default(cuid())
   typeCarte String?
-  Carte     Carte[]
+  Produit   Produit[]
 }
 
 model User {
@@ -30,4 +34,19 @@ model User {
   email    String @unique
   password String
   pseudo   String @unique
+  Commande Commande[]
+}
+
+model Categorie {
+  id           String    @id @unique @default(cuid())
+  categoryName String    @unique
+  Produit      Produit[]
+}
+
+model Commande {
+  id            String    @id @unique @default(cuid())
+  commandeDate  DateTime  @updatedAt
+  userId        String
+  produitId     Produit[]
+  utilisateurId User      @relation(fields: [userId], references: [id])
 }

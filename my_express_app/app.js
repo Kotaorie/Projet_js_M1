@@ -4,6 +4,7 @@ const app = express();
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 const prisma = new PrismaClient();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({
   origin: 'http://localhost:8080',
@@ -21,14 +22,13 @@ let db = new sqlite3.Database('./mydb.sqlite3', (err) => {
   console.log('Connected to the SQLite database.');
 });
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-// Login route
+
 app.post('/login', async (req, res) => {
-  const { email, password } = req.body.data;
+  const { email, password } = req.body;
   try {
     const user = await prisma.user.findUnique({
       where: { email }
@@ -43,7 +43,6 @@ app.post('/login', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-// Register route
 app.post('/register', async (req, res) => {
   const { email, password, pseudo } = req.body;
   try {
@@ -63,9 +62,8 @@ app.post('/register', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-//get card
 app.get('/cards', async (req, res) => {
-  const { type, price, name } = req.query;
+  const { type, price, name, categories } = req.query;
   try {
     const types = await prisma.type.findFirst({
       where: { typeCarte: type,}
@@ -80,12 +78,36 @@ app.get('/cards', async (req, res) => {
     if (name) {
       filters.name = { contains: name };
     }
-    console.log(filters);
-    const cards = await prisma.carte.findMany({
+    if(categories){
+      if (Array.isArray(categories)) {
+        filters.categorieId = {
+          in: await Promise.all(categories.map(async (category) => {
+        const categorie = await prisma.categorie.findFirst({
+          where: { categoryName: category },
+        });
+        return categorie.id;
+          }))
+        };
+      } else {
+        const categorie = await prisma.categorie.findFirst({
+          where: { categoryName: categories },
+        });
+        filters.categorieId = categorie.id;
+      }
+    }
+    const cards = await prisma.produit.findMany({
       where: filters,
     });
     
     res.json(cards);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+app.get('/categories', async (req, res) => {
+  try {
+    const categories = await prisma.categorie.findMany();
+    res.json(categories);
   } catch (error) {
     res.status(500).send(error.message);
   }

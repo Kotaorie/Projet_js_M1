@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import AboutView from '../views/AboutView.vue';
 import AppLayout from '@/components/AppLayout.vue';
 import PurchaseView from '@/views/PurchaseView.vue';
 import LoginView from '@/views/LoginView.vue';
+import PanierView from '@/views/PanierView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import ProfilView from '../views/ProfilView.vue';
 
 const routes = [
   {
@@ -34,19 +36,24 @@ const routes = [
         props: { category: 'ygo' },
       },
       {
-        path: '3d',
-        name: '3D',
-        component: AboutView,
+        path: 'panier',
+        name: 'Panier',
+        component: PanierView,
       },
       {
-        path: 'contact',
-        name: 'Contact',
-        component: AboutView,
+        path: 'profil',
+        name: 'Profil',
+        component: ProfilView,
       },
       {
         path: 'login',
         name: 'Login',
         component: LoginView,
+      },
+      {
+        path: 'register',
+        name: 'Register',
+        component: RegisterView,
       }
     ]
   }

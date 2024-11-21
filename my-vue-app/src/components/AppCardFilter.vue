@@ -47,25 +47,11 @@
                 Category
               </h6>
               <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                <li class="flex items-center">
-                  <input id="apple" type="checkbox" value=""
+                <li class="flex items-center"  v-for="(e, index) in categories" :key="index">
+                  <input :id="'category-' + index" type="checkbox" v-model="e.checked"
                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                  <label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Carte
-                  </label>
-                </li>
-                <li class="flex items-center">
-                  <input id="fitbit" type="checkbox" value=""
-                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                  <label for="fitbit" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Booster
-                  </label>
-                </li>
-                <li class="flex items-center">
-                  <input id="dell" type="checkbox" value=""
-                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                  <label for="dell" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Display
+                  <label :for="'category-' + index" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                    {{ e.name }}
                   </label>
                 </li>
               </ul>
@@ -78,6 +64,8 @@
 </section>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     name: "AppCardFilter",
     props: {
@@ -88,15 +76,38 @@ export default {
         return {
             price: (this.minPrice + this.maxPrice) / 2,
             name: '',
+            categories: [],
         }
     },
     watch: {
         price() {
-            this.$emit('filter', this.price, this.name);
+            this.$emit('filter', this.price, this.name, this.categories);
         },
         name() {
-            this.$emit('filter', this.price, this.name);
+            this.$emit('filter', this.price, this.name, this.categories);
+        },
+        categories: {
+          handler() {
+            console.log(this.categories);
+            this.$emit('filter', this.price, this.name, this.categories);
+          },
+          deep: true
         }
+    },
+    methods: {
+        async getCategories() {
+          try {
+            const cat = await axios.get('http://localhost:3000/categories');
+            for(let i = 0; i < cat.data.length; i++){
+              this.categories.push({ name: cat.data[i].categoryName, checked: false });
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+    },
+    created() {
+        this.getCategories();
     }
 }
 </script>
