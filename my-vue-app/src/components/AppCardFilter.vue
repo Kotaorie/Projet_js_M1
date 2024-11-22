@@ -88,7 +88,6 @@ export default {
         },
         categories: {
           handler() {
-            console.log(this.categories);
             this.$emit('filter', this.price, this.name, this.categories);
           },
           deep: true

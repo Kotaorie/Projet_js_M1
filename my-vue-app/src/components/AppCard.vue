@@ -20,10 +20,11 @@ export default {
         title: String,
         image: String,
         price: Number,
+        id: Number,
     },
     methods: {
         addArticle() {
-            this.$emit('add-article', { title: this.title, price: this.price });
+            this.$emit('add-article', { title: this.title, price: this.price, image: this.image, id: this.id });
         }
     }
 }

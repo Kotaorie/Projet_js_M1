@@ -28,10 +28,10 @@ export const usePanierStore = defineStore('panier', {
     },
     actions: {
         addToPanier(item) {
-        this.panier.push(item);
+          this.panier.push(item);
         },
-        removeFromPanier(index) {
-        this.panier.splice(index, 1);
+        removeFromPanier(id) {
+          this.panier = this.panier.filter((item) => item.id !== id);
         }
     }
 });
