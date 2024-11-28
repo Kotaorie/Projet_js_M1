@@ -1,4 +1,5 @@
 module.exports = {
+  darkmode: 'media',
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",

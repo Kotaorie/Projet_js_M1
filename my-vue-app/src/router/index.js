@@ -6,6 +6,7 @@ import LoginView from '@/views/LoginView.vue';
 import PanierView from '@/views/PanierView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import ProfilView from '../views/ProfilView.vue';
+import CheckoutView from '@/views/CheckoutView.vue';
 
 const routes = [
   {
@@ -13,7 +14,7 @@ const routes = [
     component: AppLayout,
     children: [
       {
-        path: '',
+        path: 'home',
         name: 'Home',
         component: HomeView,
       },
@@ -39,6 +40,11 @@ const routes = [
         path: 'panier',
         name: 'Panier',
         component: PanierView,
+      },
+      {
+        path: 'checkout',
+        name: 'checkout',
+        component: CheckoutView,
       },
       {
         path: 'profil',

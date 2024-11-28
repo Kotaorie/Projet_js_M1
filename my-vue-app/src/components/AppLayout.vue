@@ -1,7 +1,7 @@
 <template>
     <div class="app">
         <AppHeader/>
-        <div class="main">
+        <div class="main dark:bg-slay-900">
             <router-view />
         </div>
         <AppFooter/>
