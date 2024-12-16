@@ -1,5 +1,5 @@
 <template>
-  <div ref="cardContainer" class="w-[20vw] h-[80vh]"></div>
+  <div ref="cardContainer" class=" rounded-full w-[20vw] h-[80vh]"></div>
 </template>
 
 <script>
