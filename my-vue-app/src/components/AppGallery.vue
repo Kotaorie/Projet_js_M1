@@ -10,6 +10,12 @@ export default {
   mounted() {
     this.initThreeJS();
   },
+  props: {
+    _img: {
+      type: String,
+      required: true,
+    },
+  },
   methods: {
     handleError(error) {
       console.error('An error occurred:', error);
@@ -24,7 +30,8 @@ export default {
 
       // Charger la texture de l'image
       const textureLoader = new THREE.TextureLoader();
-      const texture = textureLoader.load(require('@/assets/test.png'));
+      textureLoader.crossOrigin = 'anonymous';
+      const texture = textureLoader.load(this._img);
 
       // Création de la carte avec l'image
       const geometry = new THREE.PlaneGeometry(1, 1.5);
@@ -43,24 +50,41 @@ export default {
 
       const fragmentShader = `
         varying vec2 vUv;
-        uniform sampler2D uTexture;
+        uniform sampler2D uTexture;  // Base card texture
+        uniform sampler2D uNoiseMap; // Optional noise map for holographic effect
         uniform float time;
         uniform float angle;
 
+        // Function to create a simple random effect based on UV coordinates
+        float random(vec2 p) {
+            return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+        }
+
         void main() {
-        
-          vec4 color = texture2D(uTexture, vUv);
+            vec4 color = texture2D(uTexture, vUv);
+            // Create dynamic shifts for each color channel with different frequencies and amplitudes
+            float redShift = sin(time + vUv.x * 5.0 + vUv.y * 10.0 + angle * 2.0) * 0.3;
+            float greenShift = cos(time + vUv.x * 6.0 + vUv.y * 10.0 + angle * 3.0) * 0.2;
+            float blueShift = sin(time + vUv.x * 4.0 + vUv.y * 8.0 + angle * 1.5) * 0.4;
 
-          float blueIntensity = color.b - color.r;
-          float shift = sin(time + color.r * 10.0 + vUv.x * 2.0  + angle * 10.0) * 0.2; 
-          color.r -= shift;
-          color.g -= shift;
-          color.b -= shift;
+            color.r += redShift;
+            color.g += greenShift;
+            color.b += blueShift;
 
-          color = vec4(color.r, color.g, color.b, color.a);
-          
+            color.r = clamp(color.r, 0.0, 1.0);
+            color.g = clamp(color.g, 0.0, 1.0);
+            color.b = clamp(color.b, 0.0, 1.0);
 
-          gl_FragColor = color;
+            float silverPoints = random(vUv * 200.0);  // Increase the scale of UVs for less frequent points
+
+            if (silverPoints < 0.10) {  // Increase the threshold for fewer dots
+                color.rgb += vec3(0.1, 0.1, 0.1);  // Decrease the intensity of the silver color (less visible)
+            }
+
+            vec4 noise = texture2D(uNoiseMap, vUv);
+            color.rgb += noise.rgb * 0.1; // Subtle noise/texture pattern
+
+            gl_FragColor = color;
         }
       `;
 

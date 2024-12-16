@@ -34,7 +34,6 @@
                     <label for="remember" class="text-gray-500 dark:text-gray-300">Enregistrer ma carte</label>
                   </div>
                 </div>
-                <!-- <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a> -->
               </div>
               <button class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" :onclick="payer">Payer</button>
             </div>
@@ -44,12 +43,20 @@
     </section>
   </template>
 <script>
+import router from '@/router';
+import jsPDF from 'jspdf';
+import { useLoginStore } from '@/store/store';
+
 export default {
     name: 'AppCheckout',
     data() {
       return {
-        rawCbNumber: ''
+        rawCbNumber: '',
+        loginStore: useLoginStore()
       };
+    },
+    props: {
+      command: Array,
     },
     computed: {
       formattedCbNumber: {
@@ -62,9 +69,54 @@ export default {
       }
     },
     methods: {
-      payer(){
-        alert('Paiement effectué');
+      amount(){
+        let total = 0;
+        this.command.forEach(e => {
+          total += e.price * e.quantity;
+        });
+        return total.toFixed(2);
       },
+      payer() {
+    // Générer un PDF de confirmation de paiement
+    const doc = new jsPDF();
+
+    // Ajout des informations de la commande au PDF
+    const orderInfo = {
+        orderId: '12345',
+        customerName: this.loginStore.getUserName,
+        amount: this.amount(),
+        date: new Date().toLocaleDateString()
+    };
+
+    // Définir des styles
+    doc.setFontSize(22);
+    doc.setTextColor(40);
+    doc.text("Confirmation de Paiement", 10, 20);
+
+    let startY = 0;
+    
+    for (let i = 0; i < this.command.length; i++) {
+        startY += 10;
+        doc.setFontSize(12);
+        doc.text(`${this.command[i].title} au prix de :    ${this.command[i].price}€ * ${this.command[i].quantity}`, 10, 40 + i * 10);
+    }
+    doc.setFontSize(16);
+    doc.setTextColor(60);
+    doc.text(`Numéro de commande: ${orderInfo.orderId}`, 10,  startY + 70);
+    doc.text(`Nom du client: ${orderInfo.customerName}`, 10,  startY + 80);
+    doc.text(`Montant: ${orderInfo.amount}`, 10, startY + 90);
+    doc.text(`Date: ${orderInfo.date}`, 10, startY + 100);
+
+    // Ajouter un cadre autour des informations
+    doc.setLineWidth(0.5);
+    doc.rect(5, startY + 60, 200, 50);
+
+    // Génération et téléchargement du PDF
+    doc.save(`confirmation_commande_${orderInfo.orderId}.pdf`);
+
+    router.push('/');
+}
+
     }
 
 }

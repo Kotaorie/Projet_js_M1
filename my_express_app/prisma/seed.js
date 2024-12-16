@@ -42,126 +42,126 @@ async function main() {
         data: [
             {
                 name: 'Blastoise EX',
-                imageURL: 'https://dz3we2x72f7ol.cloudfront.net/expansions/151/en-us/SV3pt5_EN_200.png',
+                imageURL: 'http://localhost:3000/images/images1.png',
                 price: 75.99,
                 typeId: type1.id,
                 categorieId: category1.id,
             },
             {
                 name: 'Charizard EX',
-                imageURL: 'https://dz3we2x72f7ol.cloudfront.net/expansions/151/en-us/SV3pt5_EN_199.png',
+                imageURL: 'http://localhost:3000/images/images2.png',
                 price: 89.99,
                 typeId: type1.id,
                 categorieId: category1.id,
             },
             {
                 name: 'Mew EX',
-                imageURL: 'https://dz3we2x72f7ol.cloudfront.net/expansions/151/en-us/SV3pt5_EN_193.png',
+                imageURL: 'http://localhost:3000/images/images3.png',
                 price: 45.50,
                 typeId: type1.id,
                 categorieId: category1.id,
             },
             {
                 name: 'Venusaur EX',
-                imageURL: 'https://dz3we2x72f7ol.cloudfront.net/expansions/151/en-us/SV3pt5_EN_198.png',
+                imageURL: 'http://localhost:3000/images/images4.png',
                 price: 29.99,
                 typeId: type1.id,
                 categorieId: category1.id,
             },
             {
                 name: 'Pikachu FA',
-                imageURL: 'https://dz3we2x72f7ol.cloudfront.net/expansions/151/en-us/SV3pt5_EN_173.png',
+                imageURL: 'http://localhost:3000/images/images5.png',
                 price: 49.99,
                 typeId: type1.id,
                 categorieId: category1.id,
             },
             {
                 name: 'Rayquaza GX',
-                imageURL: 'https://images.pokemontcg.io/sm7/109_hires.png',
+                imageURL: 'http://localhost:3000/images/images6.png',
                 price: 54.99,
                 typeId: type1.id,
                 categorieId: category1.id,
             },
             {
                 name: 'Pikachu V',
-                imageURL: 'https://images.pokemontcg.io/swsh9/157_hires.png',
+                imageURL: 'http://localhost:3000/images/images7.png',
                 price: 39.99,
                 typeId: type1.id,
                 categorieId: category1.id,
             },
             {
                 name: 'Gardevoir EX',
-                imageURL: 'https://dz3we2x72f7ol.cloudfront.net/expansions/paldean-fates/en-us/SV4pt5_EN_233.png',
+                imageURL: 'http://localhost:3000/images/images8.png',
                 price: 64.99,
                 typeId: type1.id,
                 categorieId: category1.id,
             },
             {
                 name: 'Pokémon TCG: Sword & Shield—Evolving Skies Booster Display Box',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/swsh07-booster-box/',
+                imageURL: 'http://localhost:3000/images/images10.jpg',
                 price: 143.64,
                 typeId: type1.id,
                 categorieId: category2.id,
             },
             {
                 name: 'Pokémon TCG: Sword & Shield—Chilling Reign Booster Display Box',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/swsh06-booster-box/',
+                imageURL: 'http://localhost:3000/images/images11.jpg',
                 price: 143.64,
                 typeId: type1.id,
                 categorieId: category2.id
             },
             {
                 name: 'Pokémon TCG: Sword & Shield—Fusion Strike Booster Display Box',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/swsh08-booster-box/',
+                imageURL: 'http://localhost:3000/images/images12.jpg',
                 price: 143.64,
                 typeId: type1.id,
                 categorieId: category2.id
             },
             {
                 name: 'Pokémon TCG: Sword & Shield—Brilliant Stars Booster Display Box',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/swsh09-booster-box/',
+                imageURL: 'http://localhost:3000/images/images13.jpg',
                 price: 143.64,
                 typeId: type1.id,
                 categorieId: category2.id
             },
             {
                 name: 'Pokémon TCG: Sword & Shield—Battle Styles Booster Display Box',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/swsh05-booster-box/',
+                imageURL: 'http://localhost:3000/images/images14.jpg',
                 price: 143.64,
                 typeId: type1.id,
                 categorieId: category2.id
             },
             {
                 name: 'Pokémon TCG: Battle Academy (2022)',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/battle-academy-2022/',
+                imageURL: 'http://localhost:3000/images/images15.jpg',
                 price: 19.99,
                 typeId: type1.id,
                 categorieId: category3.id
             },
             {
                 name: 'Pokémon TCG: V Battle Deck—Rayquaza vs. Noivern',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/v-battle-deck-rayquaza-v-noivern-v/',
+                imageURL: 'http://localhost:3000/images/images16.jpg',
                 price: 29.99,
                 typeId: type1.id,
                 categorieId: category3.id
             },
             {
                 name: 'Pokémon TCG: V Battle Deck—Venusaur vs. Blastoise',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/v-battle-deck-venusaur-v-blastoise-v/',
+                imageURL: 'http://localhost:3000/images/images17.jpg',
                 price: 29.99,
                 typeId: type1.id,
                 categorieId: category3.id
             },
             {
                 name: 'Pokémon TCG: Sword & Shield—Astral Radiance Elite Trainer Box',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/swsh10-elite-trainer-box/',
+                imageURL: 'http://localhost:3000/images/images18.jpg',
                 price: 39.99,
                 typeId: type1.id,
                 categorieId: category3.id
             },
             {
                 name: 'Pokémon TCG: Sword & Shield—Lost Origin Elite Trainer Box',
-                imageURL: 'https://www.pokemon.com/us/pokemon-tcg/product-gallery/swsh11-elite-trainer-box/',
+                imageURL: 'http://localhost:3000/images/images19.jpg',
                 price: 39.99,
                 typeId: type1.id,
                 categorieId: category3.id

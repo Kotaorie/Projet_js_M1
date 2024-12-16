@@ -4,7 +4,7 @@
         <AppCardFilter @filter="getCard" :minPrice="minPrice" :maxPrice="maxPrice"/>
       </div>
         <div class="grid grid-cols-5 gap-4 w-[80%] mx-auto">
-          <AppCard v-for="item in cards" :key="item" :image="item.imageURL" :title="item.name" :price="item.price" :id="item.id" @add-article="addArticle"/>
+          <AppCard v-for="item in cards" :key="item" :image="item.imageURL" :title="item.name" :price="item.price" :id="item.id" :type="item.type" :cat="item.categories" @add-article="addArticle"/>
         </div>
     </div>
   </template>
@@ -37,6 +37,11 @@
       }
     },
     methods: {
+      async getCategorie(id) {
+        console.log(id);
+        var response = await axios.get('http://localhost:3000/categories/'+id);
+        return response.data;
+      },
       async getCard(price, name, categories) {
         var response = '';
         var filter = '';
@@ -57,6 +62,10 @@
         response = await axios.get('http://localhost:3000/cards?type='+this.category+filter);
         console.log(filter);
         this.cards = response.data;
+        this.cards.forEach(async element => {
+          element.categories = await this.getCategorie(element.categorieId);
+          element.type = this.category;
+        });
         console.log(this.cards);
         for (let i = 0; i < this.cards.length; i++) {
           this.minPrice = Math.min(this.minPrice, this.cards[i].price);

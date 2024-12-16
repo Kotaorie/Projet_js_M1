@@ -14,7 +14,7 @@ const routes = [
     component: AppLayout,
     children: [
       {
-        path: 'home',
+        path: '/',
         name: 'Home',
         component: HomeView,
       },

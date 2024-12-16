@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const express = require('express');
+const path = require('path');
 const app = express();
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
@@ -14,7 +15,7 @@ app.use(cors({
 }));
 app.use(express.json()); // Middleware pour parser les requêtes JSON
 app.use(express.urlencoded({ extended: true })); 
-  
+app.use('/images', express.static(path.join(__dirname, 'images')));
 let db = new sqlite3.Database('./mydb.sqlite3', (err) => {
   if (err) {
     console.error(err.message);
@@ -35,7 +36,7 @@ app.post('/login', async (req, res) => {
     });
 
     if (user && user.password === password) {
-      res.status(200).json({ message: 'Login successful' });
+      res.status(200).json({ message: 'Login successful', pseudo: user.pseudo });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
     }
@@ -108,6 +109,22 @@ app.get('/categories', async (req, res) => {
   try {
     const categories = await prisma.categorie.findMany();
     res.json(categories);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.get('/categories/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const category = await prisma.categorie.findUnique({
+      where: { id: id },
+    });
+    if (category) {
+      res.json(category.categoryName);
+    } else {
+      res.status(404).json({ message: 'Category not found' });
+    }
   } catch (error) {
     res.status(500).send(error.message);
   }

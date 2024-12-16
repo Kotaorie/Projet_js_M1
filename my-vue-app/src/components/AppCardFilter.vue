@@ -1,7 +1,6 @@
 <template>
     <section class="bg-gray-50 dark:bg-gray-900 flex items-center">
   <div class="max-w-screen-xl px-4 mx-auto my-8 lg:px-12 w-full">
-    <!-- Start coding here -->
     <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
       <div class="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
         <div class="w-full md:w-1/2">
@@ -41,7 +40,6 @@
                 <path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
               </svg>
             </button>
-            <!-- Dropdown menu -->
             <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
               <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                 Category
