@@ -6,6 +6,10 @@
               <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Créer un compte
               </h1>
+              <div v-if="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Erreur !</strong>
+                <span class="block sm:inline">Veuillez vérifier vos informations</span>
+              </div>
               <div v-if="wrongPassword" class="bg-red-500 px-6 py-6 rounded">
                     <p class="text-sm text-white dark:text-white">Une erreur est survenue, veuillez vérifier vos informations</p>
               </div>
@@ -24,7 +28,7 @@
                   </div>
                   <div>
                       <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmez le mot de passe</label>
-                      <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" v-model="verifPassword">
+                      <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" v-model="verifPassword">
                   </div>
                   <div class="flex items-start">
                       <div class="flex items-center h-5">
@@ -57,9 +61,12 @@ export default {
             wrongPassword: false
         }
     },
+    props: {
+        error: Boolean
+    },
     methods: {
         register() {
-            if (password !== this.verifPassword) {
+            if (this.password !== this.verifPassword) {
                 console.error('Passwords do not match');
                 this.wrongPassword = true;
                 return;

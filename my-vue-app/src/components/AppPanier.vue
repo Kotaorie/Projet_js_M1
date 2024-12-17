@@ -6,6 +6,9 @@
     <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
       <div v-if="!paiment" class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
         <div class="space-y-6">
+          <div   v-if="articles.length === 0">
+            <h2>Votre panier est vide</h2>
+          </div>
           <div v-for="(e, index) of articles" :key="index" class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
                 <img class="h-auto w-20 dark:hidden" :src="e.image" alt="imac image" />

@@ -4,18 +4,20 @@ const path = require('path');
 const app = express();
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
+const { password } = require('pg/lib/defaults');
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
   origin: 'http://localhost:8080',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], 
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 }));
 app.use(express.json()); // Middleware pour parser les requêtes JSON
 app.use(express.urlencoded({ extended: true })); 
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
 let db = new sqlite3.Database('./mydb.sqlite3', (err) => {
   if (err) {
     console.error(err.message);
@@ -36,7 +38,7 @@ app.post('/login', async (req, res) => {
     });
 
     if (user && user.password === password) {
-      res.status(200).json({ message: 'Login successful', pseudo: user.pseudo });
+      res.status(200).json({ message: 'Login successful', pseudo: user.pseudo, id: user.id, email: user.email });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
     }
@@ -125,6 +127,26 @@ app.get('/categories/:id', async (req, res) => {
     } else {
       res.status(404).json({ message: 'Category not found' });
     }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.patch('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const { pseudo, email} = req.body;
+  if(password === ''){
+    data = { pseudo, email}
+  }else {
+    const { password } = req.body;
+    data = { pseudo, email, password }
+  }
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: id },
+      data: data,
+    });
+    res.json(updatedUser);
   } catch (error) {
     res.status(500).send(error.message);
   }

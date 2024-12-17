@@ -31,7 +31,6 @@ export default {
     methods: {
       removeArticle(id) {
         this.panier.removeFromPanier(id);
-        console.log(this.panier.getPanier);
         this.getArticle();
       },
       increaseQuantity(articleId) {

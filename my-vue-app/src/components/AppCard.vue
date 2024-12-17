@@ -7,7 +7,8 @@
             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white mb-3">{{ title }}</h5>
             <div class="flex items-center justify-between">
                 <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ price.toFixed(2) }}</span>
-                <button class="w-[60%] text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" :onclick="addArticle">Ajouter au panier</button>
+                <button v-if="!isAdded" class="w-[60%] text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" :onclick="addArticle">Ajouter au panier</button>
+                <button v-if="isAdded" class="w-[60%] text-white bg-green-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" :onclick="addArticle">Article ajoutée !</button>
             </div>
         </div>
         <div v-if="moveCard" @click="moveCard = false" class="fixed w-full h-full top-0 left-0  items-center justify-between px-5 py-3 dark:bg-gray-700">
@@ -30,24 +31,23 @@ export default {
     data(){
         return {
             isClickable: false,
-            moveCard: false
+            moveCard: false,
+            isAdded: false
         }
     },
     props: {
         title: String,
         image: String,
         price: Number,
-        id: Number,
+        id: String,
         type: String,
         cat: String
     },
     watch: {
         type: {
            handler() {
-            console.log(this.type + ' ' + this.cat);
             if(this.type == 'pokemon' && this.cat === 'Carte'){
                 this.isClickable = true;
-                console.log(this.isClickable);
             }
            },
            deep: true
@@ -55,8 +55,12 @@ export default {
     },
     methods: {
         addArticle() {
-            console.log(this.type + ' ' + this.cat);
+            let user = localStorage.getItem('id');
+            if(user === null){
+                this.$router.push('/login');
+            }
             this.$emit('add-article', { title: this.title, price: this.price, image: this.image, id: this.id });
+            this.isAdded = true;
         },
         seeCard(){
             if(this.type == 'pokemon' && this.cat === 'Carte'){

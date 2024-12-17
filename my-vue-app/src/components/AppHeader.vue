@@ -12,7 +12,7 @@
           <RouterLink to="/" class="block py-2 px-3 text-gray-900 bg-blue-700  md:bg-transparent md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" >Accueil</RouterLink>
         </li>
         <li>
-          <button id="dropdownNavbarLink" ref="Carte" @click="toggleDropdown" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-8 py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+          <button id="dropdownNavbarLink" ref="Carte" @click.stop="toggleDropdown" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-8 py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
             Cartes {{ this.cardName }}
             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -64,7 +64,6 @@ export default {
     },
     created() {
         this.showPanier();
-        console.log(this.url);
     },
     watch: {
       loginStore: {
@@ -76,7 +75,6 @@ export default {
       $route: {
         handler() {
           this.url = this.$route.name;
-          console.log(this.url);
           if (this.url === 'Pokemon' || this.url === 'MTG' || this.url === 'YGO') {
             this.cardName = this.url;
             this.$refs.Carte.style.borderBottom = '2px solid #2563EB';
@@ -91,9 +89,13 @@ export default {
     methods: {
       toggleDropdown() {
         this.isDropdownOpen = true  // Inverse l'état de l'affichage du dropdown
+        this.$nextTick(() => {
+          document.addEventListener('click', this.closeDropdown);
+        });
       },
       closeDropdown() {
           this.isDropdownOpen = false;  // Ferme le dropdown
+          document.removeEventListener('click', this.closeDropdown);
       },
       showPanier() {
         this.name = localStorage.getItem('name');

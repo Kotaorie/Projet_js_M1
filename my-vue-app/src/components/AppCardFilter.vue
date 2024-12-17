@@ -16,10 +16,10 @@
             </div>
           </form>
         </div>
-        <div class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
+        <div class="relative flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
           <div class="flex items-center w-full space-x-3 md:w-auto">
             <span class="text-sm font-medium text-gray-900 dark:text-gray-200">{{ minPrice }}€</span>
-            <input id="minmax-range" type="range" :min="minPrice" max="maxPrice" step="5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" v-model="price">
+            <input id="minmax-range" type="range" :min="minPrice" :max="maxPrice+5" step="5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" v-model="price">
             <span class="text-sm font-medium text-gray-900 dark:text-gray-200">{{ maxPrice }}€</span>
             <div id="actionsDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
               <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
@@ -31,20 +31,20 @@
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete all</a>
               </div>
             </div>
-            <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown" class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
+            <button @click="toggleCategoryFunction" id="filterDropdownButton" class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
               <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-4 h-4 mr-2 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
               </svg>
-              Filter
+              Categories
               <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
               </svg>
             </button>
-            <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
+            <div v-if="toggleCategroy" id="filterDropdown" class="z-10 absolute top-10 right-0 w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
               <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                 Category
               </h6>
-              <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+              <ul class="space-y-2 text-sm" >
                 <li class="flex items-center"  v-for="(e, index) in categories" :key="index">
                   <input :id="'category-' + index" type="checkbox" v-model="e.checked"
                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
@@ -75,6 +75,7 @@ export default {
             price: (this.minPrice + this.maxPrice) / 2,
             name: '',
             categories: [],
+            toggleCategroy: false
         }
     },
     watch: {
@@ -87,11 +88,15 @@ export default {
         categories: {
           handler() {
             this.$emit('filter', this.price, this.name, this.categories);
+            this.toggleCategroy = false;
           },
           deep: true
         }
     },
     methods: {
+        toggleCategoryFunction() {
+          this.toggleCategroy = !this.toggleCategroy;
+        },
         async getCategories() {
           try {
             const cat = await axios.get('http://localhost:3000/categories');

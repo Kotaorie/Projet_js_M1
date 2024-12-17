@@ -1,5 +1,5 @@
 <template>
-  <div ref="cardContainer" class=" rounded-full w-[20vw] h-[80vh]"></div>
+  <div ref="cardContainer" class=" rounded-full w-[100vw] h-[100vh] flex justify-center align-middle"></div>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default {
 
       // Création de la carte avec l'image
       const geometry = new THREE.PlaneGeometry(1, 1.5);
-      const material = new THREE.MeshPhongMaterial({ map: texture, shininess: 100 });
+      const material = new THREE.MeshPhongMaterial({ map: texture, transparent: true });
       const card = new THREE.Mesh(geometry, material);
       scene.add(card);
 
@@ -95,6 +95,7 @@ export default {
           uTexture: { value: texture },
           angle: { value: 0 }, // Initialisation de l'angle à 0
         },
+        transparent: true,
       });
 
       card.material = shaderMaterial;

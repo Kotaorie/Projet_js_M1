@@ -38,7 +38,6 @@
     },
     methods: {
       async getCategorie(id) {
-        console.log(id);
         var response = await axios.get('http://localhost:3000/categories/'+id);
         return response.data;
       },
@@ -57,16 +56,13 @@
              filter += '&categories='+categories[i].name;
             }
           }
-          console.log(filter);
         }
         response = await axios.get('http://localhost:3000/cards?type='+this.category+filter);
-        console.log(filter);
         this.cards = response.data;
         this.cards.forEach(async element => {
           element.categories = await this.getCategorie(element.categorieId);
           element.type = this.category;
         });
-        console.log(this.cards);
         for (let i = 0; i < this.cards.length; i++) {
           this.minPrice = Math.min(this.minPrice, this.cards[i].price);
           this.maxPrice = Math.max(this.maxPrice, this.cards[i].price);
@@ -74,7 +70,6 @@
       },
       addArticle(name, price, image, id) {
         this.panier.addToPanier(name, price, image, id);
-        console.log(this.panier.getPanier);
       },
     }
   }

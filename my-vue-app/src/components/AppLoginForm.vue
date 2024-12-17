@@ -6,6 +6,10 @@
           <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
            Formulaire de connexion
           </h1>
+          <div v-if="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Erreur !</strong>
+            <span class="block sm:inline">Email ou mot de passe incorrect.</span>
+          </div>
           <div class="space-y-4 md:space-y-6" >
             <div>
               <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre email</label>
@@ -45,6 +49,9 @@ export default {
         email: '',
         password: ''
       }
+    },
+    props: {
+      error: Boolean
     },
     methods: {
       login() {
