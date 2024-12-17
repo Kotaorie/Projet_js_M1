@@ -1,29 +1,30 @@
 <template>
-  <div>
-    <h1>Home Page</h1>
-    <p>Welcome to the home page!</p>
-    <button @click="test()">zizi</button>
+  <div class="place-content-center" >
+    <AppDefaultHeading class="my-[35vh]"/>
   </div>
 </template>
-  
 <script>
-import axios from 'axios';
+import AppDefaultHeading from '@/components/AppDefaultHeading.vue';
+
   export default {
     name: 'HomeView',
+    components: {AppDefaultHeading},
+    data() {
+      return {
+      };
+    },
     methods: {
-      async test() {
-        try {
-          const response = await axios.get('http://localhost:3000/test');
-          console.log(response.data);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }
+      
     },
   }
 </script>
   
 <style scoped>
+
+#darker{
+  top: 0;
+  left: 0;
+}
 
 </style>
   

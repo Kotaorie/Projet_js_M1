@@ -1,7 +1,7 @@
 <template>
     <div class="app">
         <AppHeader/>
-        <div class="main">
+        <div class="main dark:bg-slay-900">
             <router-view />
         </div>
         <AppFooter/>
@@ -28,5 +28,9 @@ body {
 .body {
     height: 80vh;
     background-color: #EFF1ED
+}
+.main {
+    background-color: #f9fafb;
+    min-height: 70vh;
 }
 </style>

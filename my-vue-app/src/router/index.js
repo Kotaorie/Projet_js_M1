@@ -1,8 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import AboutView from '../views/AboutView.vue';
 import AppLayout from '@/components/AppLayout.vue';
 import PurchaseView from '@/views/PurchaseView.vue';
+import LoginView from '@/views/LoginView.vue';
+import PanierView from '@/views/PanierView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import ProfilView from '../views/ProfilView.vue';
+import CheckoutView from '@/views/CheckoutView.vue';
 
 const routes = [
   {
@@ -10,40 +14,52 @@ const routes = [
     component: AppLayout,
     children: [
       {
-        path: '',
+        path: '/',
         name: 'Home',
         component: HomeView,
       },
       {
-        path: 'cards',
-        name: 'Cards',
+        path: 'pokemon',
+        name: 'Pokemon',
         component: PurchaseView,
-        props : {_title:"test"}
+        props: { category: 'pokemon' },
       },
       {
-        path: 'decks',
-        name: 'Decks',
-        component: AboutView,
+        path: 'mtg',
+        name: 'MTG',
+        component: PurchaseView,
+        props: { category: 'mtg' },
       },
       {
-        path: 'display',
-        name: 'Display',
-        component: AboutView,
+        path: 'ygo',
+        name: 'YGO',
+        component: PurchaseView,
+        props: { category: 'ygo' },
       },
       {
-        path: '3d',
-        name: '3D',
-        component: AboutView,
+        path: 'panier',
+        name: 'Panier',
+        component: PanierView,
       },
       {
-        path: 'contact',
-        name: 'Contact',
-        component: AboutView,
+        path: 'checkout',
+        name: 'checkout',
+        component: CheckoutView,
+      },
+      {
+        path: 'profil',
+        name: 'Profil',
+        component: ProfilView,
       },
       {
         path: 'login',
         name: 'Login',
-        component: AboutView,
+        component: LoginView,
+      },
+      {
+        path: 'register',
+        name: 'Register',
+        component: RegisterView,
       }
     ]
   }

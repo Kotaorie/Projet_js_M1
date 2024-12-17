@@ -1,13 +1,16 @@
 <template>
     <div>
-      <h1>About Page</h1>
-      <p>This is the about page.</p>
+        <AppProfilForm />
     </div>
   </template>
   
   <script>
+  import AppProfilForm from '@/components/AppProfilForm.vue'
   export default {
-    name: 'AboutView'
+    name: 'AboutView',
+    components: {
+      AppProfilForm
+    }
   }
   </script>
   
